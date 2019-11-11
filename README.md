@@ -12,11 +12,6 @@ _A list of my commonly used Git commands_
 
 --
 
-### Stages
-![stages](./figures/stages.png)
-![stages_2nd_view](./figures/remote_local.png)
-### 
-
 ### Getting & Creating Projects
 
 | Command | Description |
@@ -75,3 +70,7 @@ _A list of my commonly used Git commands_
 | `git log --summary` | View changes (detailed) |
 | `git log --oneline` | View changes (briefly) |
 | `git diff [source branch] [target branch]` | Preview changes before merging |
+
+### Stages
+![stages](./figures/stages.png)
+![stages_2nd_view](./figures/remote_local.png)
