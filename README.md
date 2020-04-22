@@ -12,6 +12,10 @@ _A list of my commonly used Git commands_
 
 --
 
+### Info
++ `HEAD` is the most recent commit on the branch I'm in currently.
++ There are three local stages: The **working directory** (or working tree) where the modified files go. When you stage them, they go to the **staging index**. When you commit staged changes they get promoted to the **commit history**.
+
 ### Getting & Creating Projects
 
 | Command | Description |
@@ -70,6 +74,18 @@ _A list of my commonly used Git commands_
 | `git log --summary` | View changes (detailed) |
 | `git log --oneline` | View changes (briefly) |
 | `git diff [source branch] [target branch]` | Preview changes before merging |
+
+### Managing Stages
+
+| Command | Description |
+| ------- | ----------- |
+| `git clean [-f] [-i] [-n] [-d] <filename>` | Remove untracked files and dirs (with -d flag) |
+| `git checkout -- <filename>` | Remove unstaged modified file |
+| `git checkout .` | Remove all unstaged modified files |
+| `git reset [--soft\|mixed\|hard] <commit_hash>` | Reset the state of the branch to the referenced commit hash. `hard` removes the modifications permanentely, `mixed` unstage them to the working tree, and `soft` resets everything to the stage index (more useful when used to commits other than HEAD)  [REFERENCE](https://www.atlassian.com/git/tutorials/undoing-changes/git-reset) |
+
++ HARD: The Commit History ref pointers are updated to the specified commit. Then, the Staging Index and Working Directory are reset to match that of the specified commit. Any previously pending changes to the Staging Index and the Working Directory gets reset to match the state of the Commit Tree. This means any pending work that was hanging out in the Staging Index and Working Directory will be lost.
++ MIXED: This is the default operating mode. The ref pointers are updated. The Staging Index is reset to the state of the specified commit. Any changes that have been undone from the Staging Index are moved to the Working Directory.
 
 ### Stages
 ![stages](./figures/stages.png)
