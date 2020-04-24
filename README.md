@@ -80,8 +80,13 @@ _A list of my commonly used Git commands_
 | ------- | ----------- |
 | `git log` | View changes |
 | `git log --summary` | View changes (detailed) |
-| `git log --oneline` | View changes (briefly) |
-| `git diff [source branch] [target branch]` | Preview changes before merging |
+| `git log --oneline [--graph]` | View changes (briefly) |
+| `git log <master>..<otherBranch>` | This will show you commits that <otherBranch> has but <master> doesnt. |
+| `git log --oneline --decorate --left-right --graph master...origin/master` | This will show you both the commits that A has and that B doesn't have, and the commits that B has that A doesn't have. In other words, it will filter out all of the commits that both A and B share, thus only showing the commits that they don't both share. [REFERENCE](https://stackoverflow.com/questions/462974/what-are-the-differences-between-double-dot-and-triple-dot-in-git-com) |
+| `git diff [--staged] [--name-only]` | Preview changes between the working directory (or the staged area with `--staged`) and last commit. For commits other than the last one, just add the commit as an argument at the end. `--name-only` supresses the content of each file in the diff output. |
+| `git diff [--staged] [--name-only] <source_commit> <target_commit>` | Preview changes between <source_commit> (or the staged area with `--staged`) and <target_commit>. Behaves the same as "<source_commit>..<target_commit>, i.e. compares their HEADs." |
+| `git diff [--staged] [--name-only] <source_commit>...<target_commit>` | Shows changes in branch <target_commit> since it was branched from branch <source_commit> |
+| `git diff <source_branch> <target_branch>` | Preview changes before merging |
 
 ### Managing commit history (undoing)
 
