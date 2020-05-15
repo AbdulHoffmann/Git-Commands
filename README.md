@@ -88,6 +88,8 @@ _A list of my commonly used Git commands_
 | `git diff [--staged] [--name-only] <source_commit>...<target_commit>` | Shows changes in branch <target_commit> since it was branched from branch <source_commit> |
 | `git diff <source_branch> <target_branch>` | Preview changes before merging |
 
++ To see non-staged (non-added) changes to existing files: `git diff`. To see staged, non-commited changes: `git diff --cached`
+
 ### Managing commit history (undoing)
 
 | Command | Description |
