@@ -1,17 +1,6 @@
 Git Commands
 ============
 
-## Translated Versions
-- [Versão em português](READMEpt.md)
-
-___
-
-_A list of my commonly used Git commands_
-
-*If you are interested in my Git aliases, have a look at my `.bash_profile`, found here: https://github.com/joshnh/bash_profile/blob/master/.bash_profile*
-
---
-
 ### Info
 + `HEAD` is the most recent commit on the branch I'm in currently.
 + There are three local stages: The **working directory** (or working tree) where the modified files go. When you stage them, they go to the **staging index**. When you commit staged changes they get promoted to the **commit history**.
