@@ -93,6 +93,8 @@ Git Commands
 + HEAD~2 (or HEAD^^): two commits before HEAD in the index
 + master~1 (or master^): notation can also be used aiming at branches names.
 
+> good sources: https://docs.gitlab.com/ee/topics/git/numerous_undo_possibilities_in_git/ and https://stackoverflow.com/questions/215718/how-can-i-reset-or-revert-a-file-to-a-specific-revision
+
 ### Managing Stages
 
 | Command | Description |
