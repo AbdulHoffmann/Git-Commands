@@ -2,7 +2,7 @@ Git Commands
 ============
 
 ### Info
-+ `HEAD` is the most recent commit on the branch I'm in currently.
++ `HEAD` is the most recent commit on the branch I'm in currently. More about `HEAD`s in [REFERENCE](https://stackoverflow.com/questions/17595524/orig-head-fetch-head-merge-head-etc/).
 + There are three local stages: The **working directory** (or working tree) where the modified files go. When you stage them, they go to the **staging index**. When you commit staged changes they get promoted to the **commit history**.
 
 ### Getting & Creating Projects
@@ -54,14 +54,17 @@ Git Commands
 
 | Command | Description |
 | ------- | ----------- |
-| `git push origin [branch name]` | Push a branch to your remote repository |
-| `git push -u origin [branch name]` | Push changes to remote repository (and remember the branch) |
-| `git push` | Push changes to remote repository (remembered branch) |
-| `git push origin --delete [branch name]` | Delete a remote branch |
+| `git push <remote_name> <branch name> [--dry-run] [--prune] [--force]` | Push a branch to your remote repository. If remote and branch name are ommitted, it is going to push to origin with the same branch name. `--dry-run` simulates everything, but does not psuh the updates. `--prune` removes all branches which are not locally present, use it carefully! Usually, the command refuses to update a remote ref that is not an ancestor of the local ref used to overwrite it, `--force` disables this check.|
+| `git push -u <remote_name> <branch name>` | Push changes to remote repository (and remember the branch) |
+| `git push [remote_name]` | Push changes to remote repository (remembered branch). To origin. Same branch name. If you would use the remote name, it would push to the same branch name but in other remote, instead of using origin as the remote. |
+| `git push <remote_name> --delete <branch name>` | Delete a remote branch |
 | `git pull` | Update local repository to the newest commit |
-| `git pull origin [branch name]` | Pull changes from remote repository |
+| `git pull <remote_name> <branch name>` | Pull changes from remote repository. It does a fetch (therefore most of the options are shared with fetch), and then a `git merge FETCH_HEAD`. |
+| `git fetch <remote_name> [--prune] [--all] [--dry-run]` | Fetches all ref data from remote repository, but does not change anything on the working copy, needing a merge after. `--prune` will connect to a shared remote repository remote and fetch all remote branch refs. It will then delete remote refs that are no longer in use on the remote repository. `--all` fetches data from all the remotes. |
 | `git remote add origin ssh://git@github.com/[username]/[repository-name].git` | Add a remote repository |
 | `git remote set-url origin ssh://git@github.com/[username]/[repository-name].git` | Set a repository's origin branch to SSH |
+
++ `git fetch` is the command that tells your local git to retrieve the latest meta-data info from the original (yet doesn't do any file transferring. It's more like just checking to see if there are any changes available). `git pull` on the other hand does that AND brings (copy) those changes from the remote repository.
 
 ### Inspection & Comparison
 
@@ -78,6 +81,21 @@ Git Commands
 | `git diff <source_branch> <target_branch>` | Preview changes before merging |
 
 + To see non-staged (non-added) changes to existing files: `git diff`. To see staged, non-commited changes: `git diff --cached`
+
+### Managing Tags
+| Command | Description |
+| ------- | ----------- |
+| `git tag [--list]` | List all local tags. If run with the option `--list` it also works with globbing pattern match.|
+| `git pull --tags` | Pull all tags to remote.|
+| `git push --tags` | Push all tags to remote.|
+| `git checkout tags/<tag_name>` | Checkout to detached HEAD using the tag.|
+| `git checkout tags/<tag_name> -b <branch_name>` | Create new branch using the tag version.|
+| `git tag [-a] [-m]` | Create new tag. With the option `-a` you can annotate it with a name. With the option `-m` you can give it a message as well.|
+| `git tag -d <tag name>` | Delete tag locally.|
+| `git push --delete <remote_name> <tag_name>` | Delete tag from remote.|
+| `git fetch --prune-tags <remote_name>` | Remove all local tags which are not also present in remote.|
+
+
 
 ### Managing commit history (undoing)
 
