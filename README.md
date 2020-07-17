@@ -86,12 +86,11 @@ Git Commands
 | Command | Description |
 | ------- | ----------- |
 | `git tag [--list]` | List all local tags. If run with the option `--list` it also works with globbing pattern match.|
-| `git tag show <tag_name>` | Show the commit which the tag belongs to.|
 | `git pull --tags` | Pull all tags to remote.|
 | `git push --tags` | Push all tags to remote.|
 | `git checkout tags/<tag_name>` | Checkout to detached HEAD using the tag.|
 | `git checkout tags/<tag_name> -b <branch_name>` | Create new branch using the tag version.|
-| `git tag [-a] [-m]` | Create new tag. Lightweight ones are created simply by typing "git tag <tag_name>", and they don't show on the commit itself, as you can prove by using `git tag show <tag_name>`. With the option `-a` you can annotate the commit with the tag, and it goes with the option `-m` you giving it a message as well. Lastly, you can also tag older commits using `git tag -a <tag_name> <commit_hash>.|
+| `git tag [-a] [-m]` | Create new tag. Lightweight ones are created simply by typing "git tag <tag_name>", and they don't show on the commit itself, as you can prove by using `git show <tag_name>`. With the option `-a` you can annotate the commit with the tag, and it goes with the option `-m` you giving it a message as well. Lastly, you can also tag older commits using `git tag -a <tag_name> <commit_hash>.|
 | `git tag -d <tag name>` | Delete tag locally.|
 | `git push --delete <remote_name> <tag_name>` | Delete tag from remote.|
 | `git fetch --prune-tags <remote_name>` | Remove all local tags which are not also present in remote.|
