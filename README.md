@@ -79,8 +79,13 @@ Git Commands
 | `git diff [--staged] [--name-only] <source_commit> <target_commit>` | Preview changes between <source_commit> (or the staged area with `--staged`) and <target_commit>. Behaves the same as "<source_commit>..<target_commit>, i.e. compares their HEADs." |
 | `git diff [--staged] [--name-only] <source_commit>...<target_commit>` | Shows changes in branch <target_commit> since it was branched from branch <source_commit> |
 | `git diff <source_branch> <target_branch>` | Preview changes before merging |
+| `git show <source_branch> <target_branch> [--name-only]` | Preview changes before merging |
 
 + To see non-staged (non-added) changes to existing files: `git diff`. To see staged, non-commited changes: `git diff --cached`
++ git diff simply looks at the bare difference between two commits. git log looks at the difference of the whole history between these two commits.
++ [Difference between diff, log A..B, and show](https://stackoverflow.com/questions/25608809/git-log-p-vs-git-show-vs-git-diff)
++ Space, double-dot and triple-dot Syntax: Space and double-dot are the same. Compares to commits, just that.  Triple-dot syntax shows the differences between A and B starting at the last common commit. [REFERENCE1](https://matthew-brett.github.io/pydagogue/git_log_dots.html) [REFERENCE2](https://matthew-brett.github.io/pydagogue/git_diff_dots.html)
++ When you use branches on diff, it will compare the HEAD commits between those two.
 
 ### Managing Tags
 | Command | Description |
@@ -94,8 +99,6 @@ Git Commands
 | `git tag -d <tag name>` | Delete tag locally.|
 | `git push --delete <remote_name> <tag_name>` | Delete tag from remote.|
 | `git fetch --prune-tags <remote_name>` | Remove all local tags which are not also present in remote.|
-
-
 
 ### Managing commit history (undoing)
 
