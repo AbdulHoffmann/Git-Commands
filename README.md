@@ -41,6 +41,21 @@ Git Commands
 | `git merge [source branch] [target branch]` | Merge a branch into a target branch |
 | `git cherry-pick [--no-commit] <commit>` | Used for picking a single commit from another branch. `--no-commit` will execute the cherry pick but instead of making a new commit it will move the contents of the target commit into the working directory of the current branch.[REFERENCE](https://www.atlassian.com/git/tutorials/cherry-pick) |
 
+### Resolving Conflincts
+| Command | Description |
+| ------- | ----------- |
+| `git mergetool` | Launch mergetool to solve conflicts. |
+| `git diff --name-only --diff-filter=U` | List conflicting files. |
+| `git diff --check` | List conflicting files. |
+| `git merge --abort` | Abort merge while you are still solving conflicts and didn't finish merging. |
+| `git add <file>; git commit -m "<msg>"` | How to manually solve a conflict: You add files you have manually edited to solve the conflict, then you commit the changes. |
+| `git merge master [--theirs] [--ours]` | When checked out at the `feature-branch`: To keep changes from master use `--theirs`, To keep changes from `feature-branch` use `--ours`|
+| `git rebase master [--theirs] [--ours]` | When checked out at the `feature-branch`: To keep changes from master use `--ours`, To keep changes from `feature-branch` use `--theirs`|
+| `git checkout [--theirs] -- <path/to/conflicted-file.txt>` | This solves conflicts for an entire file at once. To keep changes from master use `--ours`, To keep changes from `feature-branch` use `--theirs`. [REFERENCE](https://stackoverflow.com/questions/278081/resolving-a-git-conflict-with-binary-files/2163926)|
+
+
+
+
 ### Stash
 | `git stash` | Stash changes in a dirty working directory. Same as `git stash push`. |
 | `git stash apply <stash_id>` | Retrieves modifications from the stash without removing it from the stash |
