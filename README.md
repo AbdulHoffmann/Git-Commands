@@ -105,7 +105,7 @@ Git Commands
 | ------- | ----------- |
 | `git tag [--list] [-n]` | List all local tags. If run with the option `--list` it also works with globbing pattern match. `-n` also prints the annotations.|
 | `git ls-remote --tags <remote>` | List all remote tags from a remote.|
-| `git pull --tags` | Pull all tags to remote.|
+| `git pull --tags` | Pull all tags from remote.|
 | `git push --tags` | Push all tags to remote.|
 | `git checkout tags/<tag_name>` | Checkout to detached HEAD using the tag.|
 | `git checkout tags/<tag_name> -b <branch_name>` | Create new branch using the tag version.|
