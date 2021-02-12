@@ -8,4 +8,5 @@ ALIASES & USEFUL COMMANDS
 + git fetch [remote_name] --prune [--dry-run]
 + git remote prune [remote_name] [--dry-run]
 
+> [REFERENCE](https://stackoverflow.com/questions/3184555/cleaning-up-old-remote-git-branches) \
 > remote_name being usually `origin`
