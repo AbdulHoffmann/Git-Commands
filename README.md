@@ -84,7 +84,7 @@ Git Commands
 | `git remote set-url origin ssh://git@github.com/[username]/[repository-name].git` | Set a repository's origin branch to SSH |
 
 + `git fetch` is the command that tells your local git to retrieve the latest meta-data info from the original (yet doesn't do any file transferring. It's more like just checking to see if there are any changes available). `git pull` on the other hand does that AND brings (copy) those changes from the remote repository.
-
++ [What are GIT Refs?](https://git-scm.com/book/en/v2/Git-Internals-Git-References): A simple name so you could use that simple name rather than the raw SHA-1 value to refer to the commits.
 #### Branch Tracking
 
 | Command | Description |
