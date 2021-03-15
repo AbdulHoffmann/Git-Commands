@@ -92,7 +92,7 @@ Git Commands
 | `git checkout --track <remote_name>/<branch_name>` | Create a local branch that tracks a remote branch. `git fetch` FIRST to make sure your repo is updated with remote references and `git checkout --track <remote_name>/<branch_name>` should be enough. If `--track` is not present, git will checkout to <remot_name>/<branch_name> and enter detached HEAD mode locally, so you'd have to create a local branch to commit it manually. Then you can commit to that branch and a `git push` to sync the remote with your changes. Note that `--track <remote_name>/<branch_name>` is shorthand for `git checkout -b <branch_name> <remote_name>/<branch_name>`. [REFERENCE](https://stackoverflow.com/questions/520650/make-an-existing-git-branch-track-a-remote-branch). |
 | `git push -u <remote_name>/<branch_name>` | Push changes to remote repository and track the newly created branch. |
 | `git branch -u <remote_name>/<branch_name>` | Set a tracking relationship for your current HEAD branch at any time. |
-
+|`git branch -vv`| List branches tracking data. [REFERENCE](https://stackoverflow.com/questions/4950725/how-can-i-see-which-git-branches-are-tracking-which-remote-upstream-branch). |
 + For tracking, there are three operations: **Pull from remote** and make a tracking relationship (`--track`), **Push to remote** creating a <remote>/<my_branch> remote branch (`push --set-upstream`), and simply **Setting a tracking relationship** between two branches (a local and a remote) (`branch --set-upstream`). [REFERENCE](https://www.git-tower.com/learn/git/faq/track-remote-upstream-branch/).
 
 > There's no difference between `<remote_name> <branch_name>` and `<remote_name>/<branch_name>`.
