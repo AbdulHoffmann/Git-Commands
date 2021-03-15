@@ -12,6 +12,12 @@ Git Commands
 | `git init` | Initialize a local Git repository |
 | `git clone ssh://git@github.com/[username]/[repository-name].git` | Create a local copy of a remote repository |
 
+### Config
+
+| Command | Description |
+| ------- | ----------- |
+|`git config [--global] credential.helper store`| Stores the credentials in plaintext on your PC's disk. Potentially dangerous. Used with the `https` protocol.|
+
 ### Basic Snapshotting
 
 | Command | Description |
@@ -22,7 +28,7 @@ Git Commands
 | `git commit -m "[commit message]"` | Commit changes |
 | `git rm -r [file-name.txt]` | Remove a file (or folder) |
 
-### Branching & Merging
+### Branching & Merging (Local Operations)
 
 | Command | Description |
 | ------- | ----------- |
@@ -30,10 +36,7 @@ Git Commands
 | `git branch -a` | List all branches (local and remote) |
 | `git branch [branch name]` | Create a new branch |
 | `git branch -d [branch name]` | Delete a branch |
-| `git push origin --delete [branch name]` | Delete a remote branch |
 | `git checkout -b [branch name]` | Create a new branch and switch to it |
-| `git checkout -b [branch name] origin/[branch name]` | Clone a remote branch and switch to it |
-| `git fetch --all` | Fetches all branches. Then you will only have to do a `git checkout <branch>`, and it will inform it is tracking its corresponding remote. |
 | `git branch -m [old branch name] [new branch name]` | Rename a local branch |
 | `git checkout [branch name]` | Switch to a branch |
 | `git checkout -` | Switch to the branch last checked out |
@@ -43,6 +46,7 @@ Git Commands
 | `git cherry-pick [--no-commit] <commit>` | Used for picking a single commit from another branch. `--no-commit` will execute the cherry pick but instead of making a new commit it will move the contents of the target commit into the working directory of the current branch.[REFERENCE](https://www.atlassian.com/git/tutorials/cherry-pick) |
 
 ### Resolving Conflincts
+
 | Command | Description |
 | ------- | ----------- |
 | `git mergetool` | Launch mergetool to solve conflicts. |
@@ -55,6 +59,7 @@ Git Commands
 | `git checkout [--theirs] -- <path/to/conflicted-file.txt>` | This solves conflicts for an entire file at once. To keep changes from master use `--ours`, To keep changes from `feature-branch` use `--theirs`. [REFERENCE](https://stackoverflow.com/questions/278081/resolving-a-git-conflict-with-binary-files/2163926)|
 
 ### Stash
+
 | `git stash` | Stash changes in a dirty working directory. Same as `git stash push`. |
 | `git stash apply <stash_id>` | Retrieves modifications from the stash without removing it from the stash |
 | `git stash pop <stash_id>` | Retrieves modifications from the stash and removes it from the stash |
@@ -63,21 +68,32 @@ Git Commands
 | `git stash drop <stash_id>` | Drops a single entry from the stash |
 | `git stash clear` | Remove all stashed entries |
 
-### Sharing & Updating Projects
+### Sharing & Updating Project (Remote Operations)
 
 | Command | Description |
 | ------- | ----------- |
-| `git push <remote_name> <branch name> [--dry-run] [--prune] [--force]` | Push a branch to your remote repository. If remote and branch name are ommitted, it is going to push to origin with the same branch name. `--dry-run` simulates everything, but does not psuh the updates. `--prune` removes all branches which are not locally present, use it carefully! Usually, the command refuses to update a remote ref that is not an ancestor of the local ref used to overwrite it, `--force` disables this check.|
-| `git push -u <remote_name> <branch name>` | Push changes to remote repository (and remember the branch) |
+| `git push <remote_name> <branch_name> [--dry-run] [--prune] [--force]` | Push a branch to your remote repository. If remote and branch name are ommitted, it is going to push to origin with the same branch name. `--dry-run` simulates everything, but does not push the updates. `--prune` removes all branches which are not locally present, use it carefully! Usually, the command refuses to update a remote ref that is not an ancestor of the local ref used to overwrite it, `--force` disables this check.|
 | `git push [remote_name]` | Push changes to remote repository (remembered branch). To origin. Same branch name. If you would use the remote name, it would push to the same branch name but in other remote, instead of using origin as the remote. |
-| `git push <remote_name> --delete <branch name>` | Delete a remote branch |
-| `git pull` | Update local repository to the newest commit |
-| `git pull <remote_name> <branch name>` | Pull changes from remote repository. It does a fetch (therefore most of the options are shared with fetch), and then a `git merge FETCH_HEAD`. |
+| `git push <remote_name> --delete <branch_name>` | Delete a remote branch |
 | `git fetch <remote_name> [--prune] [--all] [--dry-run]` | Fetches all ref data from remote repository, but does not change anything on the working copy, needing a merge after. `--prune` will connect to a shared remote repository remote and fetch all remote branch refs. It will then delete remote refs that are no longer in use on the remote repository. `--all` fetches data from all the remotes. |
+| `git pull` | Update local repository to the newest commit |
+| `git pull <remote_name> <branch_name>` | Pull changes from remote repository. It does a fetch (therefore most of the options are shared with fetch), and then a `git merge FETCH_HEAD`. |
+
 | `git remote add origin ssh://git@github.com/[username]/[repository-name].git` | Add a remote repository |
 | `git remote set-url origin ssh://git@github.com/[username]/[repository-name].git` | Set a repository's origin branch to SSH |
 
+#### Branch Tracking
+
+| Command | Description |
+| ------- | ----------- |
+| `git checkout --track <remote_name>/<branch_name>` | Create a local branch that tracks a remote branch. `git fetch` FIRST to make sure your repo is updated with remote references and `git checkout --track <remote_name>/<branch_name>` should be enough. If `--track` is not present, git will checkout to <remot_name>/<branch_name> and enter detached HEAD mode locally, so you'd have to create a local branch to commit it manually. Then you can commit to that branch and a `git push` to sync the remote with your changes. Note that `--track <remote_name>/<branch_name>` is shorthand for `git checkout -b <branch_name> <remote_name>/<branch_name>`. [REFERENCE](https://stackoverflow.com/questions/520650/make-an-existing-git-branch-track-a-remote-branch). |
+| `git push -u <remote_name>/<branch_name>` | Push changes to remote repository and track the newly created branch. |
+| `git branch -u <remote_name>/<branch_name>` | Set a tracking relationship for your current HEAD branch at any time. |
+
++ For tracking, there are three operations: **Pull from remote** and make a tracking relationship (`--track`), **Push to remote** creating a <remote>/<my_branch> remote branch (`push --set-upstream`), and simply **Setting a tracking relationship** between two branches (a local and a remote) (`branch --set-upstream`). [REFERENCE](https://www.git-tower.com/learn/git/faq/track-remote-upstream-branch/).
 + `git fetch` is the command that tells your local git to retrieve the latest meta-data info from the original (yet doesn't do any file transferring. It's more like just checking to see if there are any changes available). `git pull` on the other hand does that AND brings (copy) those changes from the remote repository.
+
+> There's no difference between `<remote_name> <branch_name>` and `<remote_name>/<branch_name>`.
 
 ### Inspection & Comparison
 
@@ -101,6 +117,7 @@ Git Commands
 + When you use branches on diff, it will compare the HEAD commits between those two.
 
 ### Managing Tags
+
 | Command | Description |
 | ------- | ----------- |
 | `git tag [--list] [-n]` | List all local tags. If run with the option `--list` it also works with globbing pattern match. `-n` also prints the annotations.|
