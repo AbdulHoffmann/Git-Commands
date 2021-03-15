@@ -60,6 +60,8 @@ Git Commands
 
 ### Stash
 
+| Command | Description |
+| ------- | ----------- |
 | `git stash` | Stash changes in a dirty working directory. Same as `git stash push`. |
 | `git stash apply <stash_id>` | Retrieves modifications from the stash without removing it from the stash |
 | `git stash pop <stash_id>` | Retrieves modifications from the stash and removes it from the stash |
