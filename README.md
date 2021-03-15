@@ -80,9 +80,10 @@ Git Commands
 | `git fetch <remote_name> [--prune] [--all] [--dry-run]` | Fetches all ref data from remote repository, but does not change anything on the working copy, needing a merge after. `--prune` will connect to a shared remote repository remote and fetch all remote branch refs. It will then delete remote refs that are no longer in use on the remote repository. `--all` fetches data from all the remotes. |
 | `git pull` | Update local repository to the newest commit |
 | `git pull <remote_name> <branch_name>` | Pull changes from remote repository. It does a fetch (therefore most of the options are shared with fetch), and then a `git merge FETCH_HEAD`. |
-
 | `git remote add origin ssh://git@github.com/[username]/[repository-name].git` | Add a remote repository |
 | `git remote set-url origin ssh://git@github.com/[username]/[repository-name].git` | Set a repository's origin branch to SSH |
+
++ `git fetch` is the command that tells your local git to retrieve the latest meta-data info from the original (yet doesn't do any file transferring. It's more like just checking to see if there are any changes available). `git pull` on the other hand does that AND brings (copy) those changes from the remote repository.
 
 #### Branch Tracking
 
@@ -93,7 +94,6 @@ Git Commands
 | `git branch -u <remote_name>/<branch_name>` | Set a tracking relationship for your current HEAD branch at any time. |
 
 + For tracking, there are three operations: **Pull from remote** and make a tracking relationship (`--track`), **Push to remote** creating a <remote>/<my_branch> remote branch (`push --set-upstream`), and simply **Setting a tracking relationship** between two branches (a local and a remote) (`branch --set-upstream`). [REFERENCE](https://www.git-tower.com/learn/git/faq/track-remote-upstream-branch/).
-+ `git fetch` is the command that tells your local git to retrieve the latest meta-data info from the original (yet doesn't do any file transferring. It's more like just checking to see if there are any changes available). `git pull` on the other hand does that AND brings (copy) those changes from the remote repository.
 
 > There's no difference between `<remote_name> <branch_name>` and `<remote_name>/<branch_name>`.
 
