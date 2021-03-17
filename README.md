@@ -133,7 +133,7 @@ Git Commands
 | `git push --delete <remote_name> <tag_name>` | Delete tag from remote.|
 | `git fetch --prune-tags <remote_name>` | Remove all local tags which are not also present in remote.|
 
-### Managing commit history (undoing)
+### Managing commit history (undoing and stuff)
 
 | Command | Description |
 | ------- | ----------- |
@@ -142,6 +142,7 @@ Git Commands
 | `git revert <commit>` | The `git revert` command is slightly different from the `git reset` command because it will record a new commit with the changes introducted by reverting the last commit. Note also that with `git reset` you would specify 'HEAD~1' to undo the last commit because the reset command sets a new HEAD position while reverting actually reverts the commit specified. As a consequence, you will have to commit the changes again for the files to be reverted and for the commit to be undone. |
 | `git revert [--no-commit] <commit>..<other_commit>` | Reverts a range of commits. The `--no-commit` flag lets git revert all the commits at once - otherwise you'll be prompted for a message for each commit in the range, littering your history with unnecessary new commits. |
 | `git rebase [-i] <commit>` | Git rebase in standard mode will automatically take the commits in your current working branch and apply them to the head of the passed branch. Running git rebase with the -i flag begins an interactive rebasing session. Instead of blindly moving all of the commits to the new base, interactive rebasing gives you the opportunity to alter individual commits in the process. This lets you clean up history by removing, splitting, and altering an existing series of commits. `git rebase --abort` to cancel the rebase operation. [REFERENCE](https://www.atlassian.com/git/tutorials/rewriting-history/git-rebase) |
+| `git commit --amend [-m "New commit message">]` | Only use this one if you HAVENT pushed changes to remote. Amends/Rectify the previous commit. First, make the changes you want and stage those changes. [REFERENCE](https://stackoverflow.com/questions/179123/how-to-modify-existing-unpushed-commit-messages) |
 
 + HEAD is the most recent commit in the current branch
 + HEAD~1 (or HEAD^): one commit before HEAD in the index
