@@ -10,7 +10,7 @@ Git Commands
 | Command | Description |
 | ------- | ----------- |
 | `git init` | Initialize a local Git repository |
-| `git clone ssh://git@github.com/[username]/[repository-name].git` | Create a local copy of a remote repository |
+| `git clone ssh://git@github.com/<username>/<repository-name>.git` | Create a local copy of a remote repository |
 
 ### Config
 
@@ -23,10 +23,10 @@ Git Commands
 | Command | Description |
 | ------- | ----------- |
 | `git status` | Check status |
-| `git add [file-name.txt]` | Add a file to the staging area |
+| `git add <file-name.txt>` | Add a file to the staging area |
 | `git add -A` | Add all new and changed files to the staging area |
-| `git commit -m "[commit message]"` | Commit changes |
-| `git rm -r [file-name.txt]` | Remove a file (or folder) |
+| `git commit [-a] -m "<commit message>"` | Commit changes with a message. The `-a` stands for all. This option automatically stages all modified files to be committed. If new files are added the `-a` option will not stage those new files. Only files that the Git repository is aware of will be committed. |
+| `git rm -r <file-name.txt>` | Remove a file (or folder) |
 
 ### Branching & Merging (Local Operations)
 
@@ -34,29 +34,42 @@ Git Commands
 | ------- | ----------- |
 | `git branch` | List branches (the asterisk denotes the current branch) |
 | `git branch -a` | List all branches (local and remote) |
-| `git branch [branch name]` | Create a new branch |
-| `git branch -d [branch name]` | Delete a branch |
-| `git checkout -b [branch name]` | Create a new branch and switch to it |
-| `git branch -m [old branch name] [new branch name]` | Rename a local branch |
-| `git checkout [branch name]` | Switch to a branch |
+| `git branch <branch_name>` | Create a new branch |
+| `git branch -d <branch_name>` | Delete a branch |
+| `git checkout -b <branch_name>` | Create a new branch and switch to it |
+| `git branch -m <old_branch_name> <new_branch_name>` | Rename a local branch |
+| `git checkout <branch_name>` | Switch to a branch |
 | `git checkout -` | Switch to the branch last checked out |
-| `git checkout -- [file-name.txt]` | Discard changes to a file |
-| `git merge [branch name]` | Merge a branch into the active branch |
-| `git merge [source branch] [target branch]` | Merge a branch into a target branch |
-| `git cherry-pick [--no-commit] <commit>` | Used for picking a single commit from another branch. `--no-commit` will execute the cherry pick but instead of making a new commit it will move the contents of the target commit into the working directory of the current branch.[REFERENCE](https://www.atlassian.com/git/tutorials/cherry-pick) |
+| `git checkout -- <file-name.txt>` | Discard changes to a file |
+| `git merge <branch_name>` | Merge a branch into the active branch |
+| `git merge <source_branch> <target_branch>` | Merge a branch into a target branch |
+| `git cherry-pick [--no-commit] <commit>` | Used for picking a single commit from another branch. `--no-commit` will execute the cherry pick but instead of making a new commit it will move the contents of the target commit into the working directory of the current branch. [REFERENCE](https://www.atlassian.com/git/tutorials/cherry-pick) |
 
-### Resolving Conflincts
+### Resolving Conflicts
 
 | Command | Description |
 | ------- | ----------- |
 | `git mergetool` | Launch mergetool to solve conflicts. |
-| `git diff --name-only --diff-filter=U` | List conflicting files. |
 | `git diff --check` | List conflicting files. |
+| `git diff --name-only --diff-filter=U` | The same as `git diff --check`. List conflicting files. |
 | `git merge --abort` | Abort merge while you are still solving conflicts and didn't finish merging. |
 | `git add <file>; git commit -m "<msg>"` | How to manually solve a conflict: You add files you have manually edited to solve the conflict, then you commit the changes. |
-| `git merge master [--theirs] [--ours]` | When checked out at the `feature-branch`: To keep changes from master use `--theirs`, To keep changes from `feature-branch` use `--ours`|
-| `git rebase master [--theirs] [--ours]` | When checked out at the `feature-branch`: To keep changes from master use `--ours`, To keep changes from `feature-branch` use `--theirs`|
-| `git checkout [--theirs] -- <path/to/conflicted-file.txt>` | This solves conflicts for an entire file at once. To keep changes from master use `--ours`, To keep changes from `feature-branch` use `--theirs`. [REFERENCE](https://stackoverflow.com/questions/278081/resolving-a-git-conflict-with-binary-files/2163926)|
+| `git checkout [--theirs|--ours] -- <path/to/conflicted-file.txt>` | This solves conflicts for an entire file at once **DURING A MERGE**. To keep changes from the active branch use `--ours`, and to keep changes from the branch being merged use `--theirs`. [REFERENCE](https://stackoverflow.com/questions/278081/resolving-a-git-conflict-with-binary-files/2163926). For using `git checkout` to solve `git rebase` conflicts: [REFERENCE](https://howchoo.com/git/git-merge-conflicts-rebase-ours-theirs)|
+| `git merge <branch_being_merged_name> -X [--theirs|--ours]` | To keep changes from the active branch use `--ours`, To keep changes from branch being merged use `--theirs`.  https://stackoverflow.com/questions/47753551/git-merge-strategy-vs-strategy-option|
+| `git rebase master [--theirs] [--ours]` | When checked out at the `feature-branch`: To keep changes from master use `--ours`, To keep changes from `feature-branch` use `--theirs`. [REFERENCE](https://howchoo.com/git/git-merge-conflicts-rebase-ours-theirs)|
+
+#### Merging conflicts usual case
+
+1. Try to merge a branch into the active one: `git merge <branch_being_merged_name>`
+2. Get a conflict message
+3. Solve Conflict
+    1. Via checking the files: `git mergetool`
+    2. Via accepting one file version: `git checkout [--theirs|--ours] -- <path/to/conflicted-file>`
+    3. Via accepting the whole merge from one side: `git merge <branch_being_merged_name> -X [--theirs|--ours]`
+    4. Via aborting everything: `git merge --abort`
+4. Add the file: `git add <path/to/conflicted-file>`
+5. Finish Merge: `git merge --continue` or `git commit`. They are the same at this stage.
+6. Clean extra files (e.g. \*.orig) created by diff tool: `git clean`.
 
 ### Stash
 
@@ -85,6 +98,7 @@ Git Commands
 
 + `git fetch` is the command that tells your local git to retrieve the latest meta-data info from the original (yet doesn't do any file transferring. It's more like just checking to see if there are any changes available). `git pull` on the other hand does that AND brings (copy) those changes from the remote repository.
 + [What are GIT Refs?](https://git-scm.com/book/en/v2/Git-Internals-Git-References): A simple name so you could use that simple name rather than the raw SHA-1 value to refer to the commits.
+
 #### Branch Tracking
 
 | Command | Description |
