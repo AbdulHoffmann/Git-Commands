@@ -200,7 +200,7 @@ For `git diff`, `..` and ` ` syntax are the same. Differently than for `git log`
 + HEAD~2 (or HEAD^^): two commits before HEAD in the index
 + master~1 (or master^): notation can also be used aiming at branches names.
 
-> good sources: https://docs.gitlab.com/ee/topics/git/numerous_undo_possibilities_in_git/ and https://stackoverflow.com/questions/215718/how-can-i-reset-or-revert-a-file-to-a-specific-revision
+> good sources: https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History, https://docs.gitlab.com/ee/topics/git/numerous_undo_possibilities_in_git/ and https://stackoverflow.com/questions/215718/how-can-i-reset-or-revert-a-file-to-a-specific-revision
 
 ### Managing Stages
 
