@@ -3,6 +3,7 @@ Git Commands
 
 ### Info
 + `HEAD` is the most recent commit on the branch I'm in currently. More about `HEAD`s in [REFERENCE](https://stackoverflow.com/questions/17595524/orig-head-fetch-head-merge-head-etc/).
++ Revision (revisions are the commits) referring: [gitrevisions](https://git-scm.com/docs/gitrevisions) and [Git-Tools-Revision-Selection](https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection).
 + There are three local stages: The **working directory** (or working tree) where the modified files go. When you stage them, they go to the **staging index**. When you commit staged changes they get promoted to the **commit history**.
 
 ### Getting & Creating Projects
@@ -113,20 +114,49 @@ Git Commands
 
 ### Inspection & Comparison
 
+#### Commit Logs
+
 | Command | Description |
 | ------- | ----------- |
-| `git log` | View changes |
-| `git log --summary` | View changes (detailed) |
-| `git log --oneline [--graph]` | View changes (briefly) |
-| `git log <master>..<otherBranch>` | This will show you commits that \<otherBranch\> has but \<master\> doesnt. |
+|`git reflog`| When Is a record of all commits that are or were referenced in your repo at any time. That is why git reflog (a local recording which is pruned after 90 days by default) is used when you do a "destructive" operation (like deleting a branch), in order to get back the SHA1 that was referenced by that branch. It is a local safety net.|
+| `git log` | View commit logs |
+| `git log --summary` | View commit logs (detailed) |
+| `git log --oneline [--graph]` | View commit logs (briefly) |
+| `git log <branchA>..<branchB>` | This will show you commits that \<branchB\> has but \<branchA\> doesnt. That is to say, these are commits which are unreachable by \<branchB\> because they were not present in its parent branch. |
 | `git log --oneline --decorate --left-right --graph master...origin/master` | This will show you both the commits that A has and that B doesn't have, and the commits that B has that A doesn't have. In other words, it will filter out all of the commits that both A and B share, thus only showing the commits that they don't both share. [REFERENCE](https://stackoverflow.com/questions/462974/what-are-the-differences-between-double-dot-and-triple-dot-in-git-com) |
-| `git diff [--staged] [--name-only]` | Preview changes between the working directory (or the staged area with `--staged`) and last commit. For commits other than the last one, just add the commit as an argument at the end. `--name-only` supresses the content of each file in the diff output. |
-| `git diff [--staged] [--name-only] <source_commit> <target_commit>` | Preview changes between <source_commit> (or the staged area with `--staged`) and <target_commit>. Behaves the same as "<source_commit>..<target_commit>, i.e. compares their HEADs." |
-| `git diff [--staged] [--name-only] <source_commit>...<target_commit>` | Shows changes in branch <target_commit> since it was branched from branch <source_commit> |
-| `git diff <source_branch> <target_branch>` | Preview changes before merging |
-| `git show <source_branch> <target_branch> [--name-only]` | Same as `git diff <source_branch> <target_branch>`. Preview changes before merging |
 
-+ To see non-staged (non-added) changes to existing files: `git diff`. To see staged, non-commited changes: `git diff --cached`
+![https://stackoverflow.com/questions/7251477/what-are-the-differences-between-double-dot-and-triple-dot-in-git-dif](./figures/git_log_explanation.png)
+
+#### Diff
+
+##### Between Commits
+
+| Command | Description |
+| ------- | ----------- |
+| `git diff [--staged] [--name-only]` | Preview changes between the working directory (or the staged area with `--staged`) and last commit. `--name-only` supresses the content of each file in the diff output. |
+| `git diff [--staged] [--name-only] <target_commit>` | For commits other than the last one, just add the commit as an argument at the end. (E.g.: `git diff [--staged] [--name-only] HEAD^^`) |
+
+##### Between Files
+
+| Command | Description |
+| ------- | ----------- |
+| `git diff [--staged] [--name-only] <source_file> <target_file>` | Preview changes between \<source_file\> (or the staged area with `--staged`) and \<target_file\>. Behaves the same as "<source_commit>..<target_commit>, i.e. compares their HEADs." |
+| `git diff [branch]~[number_of_commits_below_HEAD]:<filename_A> <filename_B>` | Where \<filename_A\> is the base file. The reference, and \<filename_B\> would be the new version being compared. E.g.:`git diff master~20:pom.xml pom.xml`. |
+
+##### Between Branches
+
+| Command | Description |
+| ------- | ----------- |
+| `git diff [--staged] [--name-only] <source_branch>...<target_branch>` | Shows changes in branch \<target_branch\> since it was branched from branch \<source_branch\> |
+| `git diff <source_branch> <target_branch>` | Preview changes between two different branches. `git show <source_branch> <target_branch> [--name-only]` accomplishes somewhat the same thing.|
+
+![https://stackoverflow.com/questions/7251477/what-are-the-differences-between-double-dot-and-triple-dot-in-git-dif](./figures/git_diff_explanation.png)
+
++ Diff for different stages:
+    + For untracked files in the working directory: `git diff --no-index tracked_file_1 untracked_file_2`. Both files could be tracked or untracked.
+    + For non-staged tracked files in the working directory: `git diff`, `git diff tracked_file`, or `git diff tracked_file_1 tracked_file_2`
+    + To see staged, non-commited changes: `git diff --staged`, `git diff --staged tracked_file`, or `git diff --staged tracked_file_1 tracked_file_2` (The `--staged` flag takes the staged version of "tracked_file_1").
++ `--staged` and `--cached` are synonyms.
 + git diff simply looks at the bare difference between two commits. git log looks at the difference of the whole history between these two commits.
 + [Difference between diff, log A..B, and show](https://stackoverflow.com/questions/25608809/git-log-p-vs-git-show-vs-git-diff)
 + Space, double-dot and triple-dot Syntax: Space and double-dot are the same. Compares to commits, just that.  Triple-dot syntax shows the differences between A and B starting at the last common commit. [REFERENCE1](https://matthew-brett.github.io/pydagogue/git_log_dots.html) [REFERENCE2](https://matthew-brett.github.io/pydagogue/git_diff_dots.html)
@@ -178,6 +208,7 @@ Git Commands
 + HARD: The Commit History ref pointers are updated to the specified commit. Then, the Staging Index and Working Directory are reset to match that of the specified commit. Any previously pending changes to the Staging Index and the Working Directory gets reset to match the state of the Commit Tree. This means any pending work that was hanging out in the Staging Index and Working Directory will be lost.
 + MIXED: This is the default operating mode. The ref pointers are updated. The Staging Index is reset to the state of the specified commit. Any changes that have been undone from the Staging Index are moved to the Working Directory.
 
+> [Official Doc about stages and statuses](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository)
 ### Stages
 ![stages](./figures/stages.png)
 ![stages_2nd_view](./figures/remote_local.png)
