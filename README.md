@@ -114,6 +114,8 @@ Git Commands
 
 ### Inspection & Comparison
 
+![consolidated_fig](./dots_syntax_in_git/diff_log_consolidated.png)
+
 #### Commit Logs
 
 | Command | Description |
@@ -214,6 +216,7 @@ For `git diff`, `..` and ` ` syntax are the same. Differently than for `git log`
 + MIXED: This is the default operating mode. The ref pointers are updated. The Staging Index is reset to the state of the specified commit. Any changes that have been undone from the Staging Index are moved to the Working Directory.
 
 > [Official Doc about stages and statuses](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository)
+
 ### Stages
 ![stages](./figures/stages.png)
 ![stages_2nd_view](./figures/remote_local.png)
