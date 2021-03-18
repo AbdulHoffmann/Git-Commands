@@ -129,33 +129,38 @@ Git Commands
 
 #### Diff
 
+For `git diff`, `..` and ` ` syntax are the same. Differently than for `git log`.
+
 ##### Between Commits
 
 | Command | Description |
 | ------- | ----------- |
-| `git diff [--staged] [--name-only]` | Preview changes between the working directory (or the staged area with `--staged`) and last commit. `--name-only` supresses the content of each file in the diff output. |
-| `git diff [--staged] [--name-only] <target_commit>` | For commits other than the last one, just add the commit as an argument at the end. (E.g.: `git diff [--staged] [--name-only] HEAD^^`) |
+| `git diff [--staged] [--name-only]` | Preview all changes between the working directory (or the staged area with `--staged`) and last commit. `--name-only` supresses the content of each file in the diff output. |
+| `git diff [--staged] [--name-only] <target_commit>` | Same as above, but compares between commits other than the last one. (E.g.: `git diff [--staged] [--name-only] HEAD^^`) |
+| `git diff [--name-only] <reference_commit> <target_commit>` | Diff between two arbitrary commits using their SHA1 hash refs. |
 
 ##### Between Files
 
 | Command | Description |
 | ------- | ----------- |
-| `git diff [--staged] [--name-only] <source_file> <target_file>` | Preview changes between \<source_file\> (or the staged area with `--staged`) and \<target_file\>. Behaves the same as "<source_commit>..<target_commit>, i.e. compares their HEADs." |
-| `git diff [branch]~[number_of_commits_below_HEAD]:<filename_A> <filename_B>` | Where \<filename_A\> is the base file. The reference, and \<filename_B\> would be the new version being compared. E.g.:`git diff master~20:pom.xml pom.xml`. |
+| `git diff [--staged] [--name-only] <source_file> <target_file>` | Preview changes between \<source_file\> (or the staged area with `--staged`) and \<target_file\>. Behaves the same as "\<source_commit\>..\<target_commit\>, i.e. compares their HEADs." |
+| `git diff <reference_branch> <target_branch> -- <path/to/file/being/compared>` | See changes between a single file (or a group of files) in different branches.|
+| `git diff <reference_commit>..<target_commit> -- main.c` | See changes between a single file (or a group of files) in different commits. **Use this when using the SHA1 hash refs** (e.g.: `git diff HEAD^^..HEAD -- main.c` or `git diff 1a9e1911eb18176d5..65add40e66a9214cbd66 -- file1 file2 file3`) |
+| `git diff [branch]~[number_of_commits_below_HEAD]:<filename_A> [other_branch]~[number_of_commits_below_HEAD]:<filename_B>` | Syntax for comparing files from different branches and commits. Where \<filename_A\> is the base file. The reference, and \<filename_B\> would be the new version being compared. **Dont use this one when using the SHA1 hash refs** (E.g.:`git diff master~20:pom.xml pom.xml` or `git diff master^^^:pom.xml feature-branch:pom.xml`). Here we can use a number of Revision Selectors. |
 
 ##### Between Branches
 
 | Command | Description |
 | ------- | ----------- |
 | `git diff [--staged] [--name-only] <source_branch>...<target_branch>` | Shows changes in branch \<target_branch\> since it was branched from branch \<source_branch\> |
-| `git diff <source_branch> <target_branch>` | Preview changes between two different branches. `git show <source_branch> <target_branch> [--name-only]` accomplishes somewhat the same thing.|
+| `git diff <source_branch>..<target_branch>` | Preview changes between two different branches. `git show <source_branch> <target_branch> [--name-only]` accomplishes somewhat the same thing.|
 
 ![https://stackoverflow.com/questions/7251477/what-are-the-differences-between-double-dot-and-triple-dot-in-git-dif](./figures/git_diff_explanation.png)
 
 + Diff for different stages:
-    + For untracked files in the working directory: `git diff --no-index tracked_file_1 untracked_file_2`. Both files could be tracked or untracked.
-    + For non-staged tracked files in the working directory: `git diff`, `git diff tracked_file`, or `git diff tracked_file_1 tracked_file_2`
-    + To see staged, non-commited changes: `git diff --staged`, `git diff --staged tracked_file`, or `git diff --staged tracked_file_1 tracked_file_2` (The `--staged` flag takes the staged version of "tracked_file_1").
+    + For **untracked files in the working directory**: `git diff --no-index tracked_file_1 untracked_file_2`. Both files could be tracked or untracked.
+    + For **non-staged tracked files in the working directory**: `git diff`, `git diff tracked_file`, or `git diff tracked_file_1 tracked_file_2`
+    + To see **staged, non-commited changes**: `git diff --staged` or `git diff --staged tracked_file`.
 + `--staged` and `--cached` are synonyms.
 + git diff simply looks at the bare difference between two commits. git log looks at the difference of the whole history between these two commits.
 + [Difference between diff, log A..B, and show](https://stackoverflow.com/questions/25608809/git-log-p-vs-git-show-vs-git-diff)
