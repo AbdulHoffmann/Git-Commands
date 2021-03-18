@@ -206,7 +206,7 @@ For `git diff`, `..` and ` ` syntax are the same. Differently than for `git log`
 
 | Command | Description |
 | ------- | ----------- |
-| `git clean [-f] [-i] [-n] [-d] <filename>` | Remove untracked files and dirs (with -d flag) |
+| `git clean [-f] [-i] [-n] [-d] <filename>` | Remove untracked files and dirs (dirs with -d flag) |
 | `git checkout -- <filename>` | Remove unstaged modified file |
 | `git checkout .` | Remove all unstaged modified files |
 | `git restore [--source=<commit>] [--staged] [--worktree] <filename>` |  Restores files in the working tree from either the index or another commit. This command does not update your branch. The command can also be used to restore files in the index from another commit. [REFERENCE](https://stackoverflow.com/questions/58003030/what-is-git-restore-command-what-is-the-different-between-git-restore-and-git)|
